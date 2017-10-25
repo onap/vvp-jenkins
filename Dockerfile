@@ -72,6 +72,8 @@ RUN pip install -U pytest pyyaml pytest-tap
 
 USER jenkins
 
+ENV CURL_CONNECTION_TIMEOUT=60
+
 #RUN install-plugins.sh notification workflow-aggregator tap
 #Add debug mode for onapp debugging
 RUN /bin/bash -x /usr/local/bin/install-plugins.sh notification workflow-aggregator tap
