@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/jenkins
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -72,4 +72,6 @@ RUN pip install -U pytest pyyaml pytest-tap
 
 USER jenkins
 
-RUN install-plugins.sh notification workflow-aggregator tap
+#RUN install-plugins.sh notification workflow-aggregator tap
+#Add debug mode for onapp debugging
+RUN /bin/bash -x /usr/local/bin/install-plugins.sh notification workflow-aggregator tap
