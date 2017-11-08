@@ -7,8 +7,8 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.openecomp.vvp</groupId>
-  <artifactId>vvp-jenkins</artifactId>
+  <groupId>org.openecomp.vvp.jenkins</groupId>
+  <artifactId>jenkins</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <name>vvp-jenkins</name>
@@ -47,7 +47,7 @@
                 <registry>nexus3.onap.org:10003</registry>
                 <images>
                     <image>
-                        <name>openecomp/jenkins</name>
+                        <name>openecomp/vvp/jenkins</name>
                         <alias>vvp-jenkins</alias>
                         <build>
                             <cleanup>true</cleanup>
@@ -84,11 +84,11 @@
                     <id>push-images</id>
                     <phase>deploy</phase>
                     <goals>
-                        <goal>build</goal>
+                        <!-- goal>build</goal -->
                         <goal>push</goal>
                     </goals>
                     <configuration>
-                        <image>openecomp/vvp-jenkins</image>
+                        <image>openecomp/vvp/jenkins</image>
                     </configuration>
                 </execution>
             </executions>
