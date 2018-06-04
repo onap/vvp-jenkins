@@ -10,7 +10,7 @@
   <groupId>org.onap.vvp.jenkins</groupId>
   <artifactId>jenkins</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>vvp-jenkins</name>
 
   <properties>
