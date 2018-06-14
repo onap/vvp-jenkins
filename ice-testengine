@@ -45,37 +45,35 @@
 	exit 1
 }
 
-clone_or_update(){
-	# Given a repo, if we have a local clone already, update it. Otherwise,
-	# perform a shallow clone.
-	repo_name="$1"
-	repo_url="$2"
-	branch="${3:-master}"
-	if [ -d "$WORKSPACE/$repo_name" ]; then
-		git -C "$WORKSPACE/$repo_name" fetch --depth 1 --force origin "$branch"
-		git -C "$WORKSPACE/$repo_name" reset --hard origin/"$branch"
-		git -C "$WORKSPACE/$repo_name" gc
-	else
-		git clone --branch "$branch" --depth 1 --single-branch --recursive "$repo_url" "$WORKSPACE/$repo_name"
-	fi
+clone_or_update(){                       
+        # Given a repo, if we have a local clone already, update it. Otherwise,
+        # perform a shallow clone.                        
+        repo_name="$1"
+        repo_url="$2"
+        branch="${3:-master}"                                      
+        if [ -d "$WORKSPACE/$repo_name" ]; then                           
+                git -C "$WORKSPACE/$repo_name" fetch --depth 1 --force origin "$branch"
+                git -C "$WORKSPACE/$repo_name" reset --hard origin/"$branch"
+                git -C "$WORKSPACE/$repo_name" gc
+        else                                                         
+                git clone --branch "$branch" --depth 1 --single-branch --recursive "$repo_url" "$WORKSPACE/$repo_name"
+        fi                                                            
 }
 
+domain=`echo $git_repo_url | cut -d @ -f2 | cut -d ":" -f1`
+repo=`echo $git_repo_url | cut -d @ -f2 | cut -d ":" -f2`                                                                               
 # Clone or update the repo containing the VF to be evaluated
-clone_or_update "VF" "$git_repo_url" master
-
-# Clone or update the TestEngine Validation Suite repos
-for repo in "ice-validationmgr" "ice-heat-validation"
-do
-	clone_or_update "$repo" "git@github.com:att-innovate/$repo.git" develop
-done
-
-# Run test suite(s)
-cd "$WORKSPACE/ice-validationmgr"
-pytest --tap-stream
-cd "$WORKSPACE/ice-heat-validation/ice_validator"
-pytest --tap-stream --template-dir="$WORKSPACE/VF"
-
+clone_or_update "VF" "http://$domain/$repo" master
+                     
+# Clone or update the TestEngine Validation Suite repos                                              
+clone_or_update "validation-scripts" "https://gerrit.onap.org/r/vvp/validation-scripts" master 
+                                                                               
+# Run test suite(s)                                                            
+cd "$WORKSPACE/validation-scripts/ice_validator" 
+pytest --tap-stream --template-dir="$WORKSPACE/VF"                             
+                                                  
 # Clean up; remove VF directory. (VF may bring along files >20G. Easier to
 # waste bandwidth than deal with full disk. After we move to 31T root disk for
-# workspace, we can perform this cleanup less aggressively.
-rm -rf "${WORKSPACE}/VF"
+# workspace, we can perform this cleanup less aggressively.                   
+rm -rf "${WORKSPACE}/VF"                                                      
+
