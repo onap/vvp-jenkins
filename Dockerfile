@@ -68,7 +68,7 @@ COPY config.xml /usr/share/jenkins/ref/
 RUN mv /usr/local/bin/jenkins.sh /usr/local/bin/upstream_jenkins.sh; \
     mv /usr/local/bin/bootstrap /usr/local/bin/jenkins.sh
 
-RUN pip install -U pytest pyyaml pytest-tap
+RUN pip install -U pytest pyyaml pytest-tap boltons
 
 USER jenkins
 
