@@ -48,7 +48,7 @@ RUN apk add --no-cache \
     jq \
     openssh-client \
     py-pip \
-    python \
+    python3 \
     ttf-dejavu \
     unzip \
     zip \
